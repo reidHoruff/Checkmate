@@ -1,53 +1,100 @@
 (function( $ ){
 	
-	function init(args){
+	$.checkmate = function(element, args){
+		var $this = $(element);
+		var plugin = this;
 		
-		$(this).data('validate', args);
-		var data = $(this).data('validate');
-		
-		if( !data.match ){
-			$.error('No pattern defined');
+		var default_settings = {
+			require: true,
+			
+			qtip: {
+				submit: false,
+				keyup: false,
+				keypress: false
+			}
 		}
 		
-		if( args.keypress ){
-			this.keyup(function(){
-				data.keypress.call( $(this), args.match.test($(this).val()) );
+		plugin.settings = {};
+		
+		plugin.init = function(){
+			plugin.settings = $.extend({}, default_settings, args);
+			
+			if(!plugin.settings.match){
+				$.error('No pattern defined');
+			}
+			
+			/* if linked to submit to button */
+			if(plugin.settings.submit){
+				plugin.settings.submit.click(function(){
+					/* validate on call back */
+					validate.call($this);
+				});
+			}
+			
+			/* key press listener */
+			$this.keyup(function(){
+				console.log('press');
+				var match = is_valid();
+				
+				/* invoke callback */
+				if(plugin.settings.keypress){
+					plugin.settings.keypress.call( $this, match );
+				}
+				
+				/* qtip */
+				if(plugin.settings.qtip.keyup){
+					$this.qtip(match?'hide':'show');
+				}
+			});
+			
+			/* focus out listener */
+			$this.focusout(function(){
+				var match = is_valid();
+				
+				/* invoke callback */
+				if(plugin.settings.focusout){
+					plugin.settings.focusout.call( $this, match );
+				}
+				
+				/* qtip */
+				if(plugin.settings.qtip.focusout){
+					$this.qtip(match?'hide':'show');
+				}
 			});
 		}
 		
-		this.focusout(function(){
-			var match = args.match.test($(this).val());
+		var is_valid = function(){
+			var match = plugin.settings.match.test($this.val());
+			return match || ($this.val() == '' && plugin.settings.require === false);
+		}
+		
+		plugin.validate = function(){
+			console.log('validate');
+			var match = is_valid();
 			
-			if(data.focusout){
-				data.focusout.call( $(this), match );
+			/* invoke callback */
+			if(plugin.settings.validate){
+				plugin.settings.validate.call($this, match);
 			}
 			
-			if(data.qtip && data.qtip.focusout){
-				$(this).qtip(match?'hide':'show');
+			/* qtip */
+			if(plugin.settings.qtip.submit){
+				$this.qtip(match?'hide':'show');
+			}
+			
+			return $this;
+		}
+		
+		plugin.init();
+	}
+	
+	$.fn.checkmate = function(args){
+		return this.each(function(){
+			if( $(this).data('checkmate') == undefined ){
+				var plugin = new $.checkmate(this, args);
+				$(this).data('checkmate', plugin);
 			}
 		});
-	}
-	
-	function validate(){
-		
-		var data = $(this).data('validate');
-		
-		if(data.validate){
-			data.validate.call( $(this), data.match.test(this.val()) );
-		}
-		else{
-			$.error('No validation callback method set');
-		}	
-	}
-	
-	$.fn.verify = function(args){
-		
-		if(args == 'validate'){
-			validate.call(this);
-		}
-		else{
-			init.call(this, args);
-		}
 	};
 	
 })( jQuery );
