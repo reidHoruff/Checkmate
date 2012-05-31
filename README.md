@@ -142,6 +142,7 @@ It might seem sloppy to have another extension sort of half integrated. But chec
 
 
 Create Qtip
+
 	$("#name").qtip({
 		content: 'Name is Invalid',
 		
@@ -160,6 +161,7 @@ Create Qtip
 	});
 
 Create Chackmate
+
 	$("#name").checkmate({
 		match: /^[a-zA-Z]{2,}$/,
 		
