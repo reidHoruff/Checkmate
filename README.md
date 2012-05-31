@@ -8,7 +8,7 @@ Checkmate is a flexible jQuery plugin for user input validation.
 		match: /^[a-zA-Z]{2,}$/,
 	}).checkmate('validate');
 	
-##Validating All checkmate Objects on Page
+##Validating all Checkmate Objects on Page
 
 	$("#first-name").checkmate({
 		match: /^[a-zA-Z]{2,}$/,
@@ -22,7 +22,7 @@ Checkmate is a flexible jQuery plugin for user input validation.
 	//also returns a boolean representign weather or not all checkmate objects were satisfied
 	$().checkmate('validate');
 	
-##Validating A set of checkmate objects
+##Validating a Set of Checkmate Objects
 	$("#first-name").checkmate({
 		match: /^[a-zA-Z]{2,}$/,
 	});
