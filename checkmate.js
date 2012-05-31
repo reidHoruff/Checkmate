@@ -134,8 +134,6 @@
 			}
 		}
 		
-		console.log( this.data('checkmate') == undefined );
-		
 		return this.each(function(){
 			if( $(this).data('checkmate') == undefined ){
 				var plugin = new $.checkmate(this, args);
