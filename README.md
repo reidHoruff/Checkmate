@@ -1,8 +1,6 @@
 #Checkmate
 Checkmate is a flexible jQuery plugin for user input validation.
 
-#Basic Usage
-
 ##Validating a Single Text Input
 
 	//returns true or false depending on weather the regex is satisfied
@@ -40,7 +38,7 @@ Checkmate is a flexible jQuery plugin for user input validation.
 	//only validates first-name and last-name fields
 	$().checkmate('validate', [$("#first-name"), $("#last-name")] );
 	
-#Callback Methods
+##Callback Methods
 All callbacks are called with one argument, a boolean value representing whether or not the input matches the regex. All callbacks are called in the context of the checkmate jQuery object, 'this' will refer to $(this).
 
 	$("#first-name").checkmate({
@@ -69,7 +67,7 @@ All callbacks are called with one argument, a boolean value representing whether
 		}
 	});
 	
-#Submit Listener
+##Submit Listener
 	$("#email").checkmate({
 		match: /^\w+@\w+\.\w{2,4}$/,
 		
@@ -78,7 +76,7 @@ All callbacks are called with one argument, a boolean value representing whether
 		submit: $("#submit-button")
 	});
 	
-#Master Input
+##Master Input
 
 	$("#password").checkmate({
 		match: /^\w{6,}$/,
@@ -89,7 +87,7 @@ All callbacks are called with one argument, a boolean value representing whether
 		master: $("#password")
 	});
 	
-#Optional Input
+##Optional Input
 	
 	//'favorite-color' is valid if it either matches the regex or it is empty
 	$("#favorite-color").checkmate({
@@ -97,7 +95,16 @@ All callbacks are called with one argument, a boolean value representing whether
 		require: false
 	});
 	
-#Silent Validation
+##Custom Validation Logic
+	$("#first-name").checkmate({
+		
+		isvalid: function(){
+			//only valid on Thursdays
+			return new Date().getDay() == 4;
+		}
+	});
+	
+##Silent Validation
 
 	$("#first-name").checkmate({
 		match: /^[a-zA-Z]{2,}$/,
@@ -109,4 +116,21 @@ All callbacks are called with one argument, a boolean value representing whether
 	
 	//similar to $().checkmate('validate') except callbacks are not invoked, with the exception of onaction
 	$().checkmate('isvalid');
+	
+##Shared Settings
+	var common = {
+		require: false,
+		
+		validate: function(valid){
+			console.log(this.attr('id') + '=' + valid);
+		}
+	}
+	
+	$("#name").checkmate($.extend({}, common, {
+		match: /^[a-zA-Z]{2,}$/,
+	}));
+	
+	$("#email").checkmate($.extend({}, common, {
+		match: /^\w+@\w+\.\w{2,4}$/,
+	}));
 	
