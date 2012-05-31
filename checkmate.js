@@ -8,9 +8,8 @@
 			require: true,
 			
 			qtip: {
-				submit: false,
-				keyup: false,
 				keypress: false,
+				focusout: false,
 				validate: false,
 				invert: false
 			}
@@ -43,7 +42,7 @@
 				}
 				
 				/* qtip */
-				if(plugin.settings.qtip.keyup){
+				if(plugin.settings.qtip.keypress){
 					$this.qtip((valid^plugin.settings.qtip.invert)?'hide':'show');
 				}
 			});
