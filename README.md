@@ -6,7 +6,7 @@ Just include jQuery 1.5+ (tested) and checkmate.js
 
 ##Validating a Single Text Input
 
-	//returns true or false depending on weather the regex is satisfied
+	//returns true or false depending on whether the regex is satisfied
 	$("#first-name").checkmate({
 		match: /^[a-zA-Z]{2,}$/,
 	}).checkmate('validate');
@@ -21,11 +21,11 @@ Just include jQuery 1.5+ (tested) and checkmate.js
 		match: /^[a-zA-Z]{2,}$/,
 	});
 	
-	//validates both first-name and last-name inputs
-	//also returns a boolean representign weather or not all checkmate objects were satisfied
+	//returns a boolean representign whether or not all checkmate objects on page are valid
 	$().checkmate('validate');
 	
 ##Validating a Set of Checkmate Objects
+
 	$("#first-name").checkmate({
 		match: /^[a-zA-Z]{2,}$/,
 	});
@@ -42,19 +42,17 @@ Just include jQuery 1.5+ (tested) and checkmate.js
 	$().checkmate('validate', [$("#first-name"), $("#last-name")] );
 	
 ##Callback Methods
-All callbacks are called with one argument, a boolean value representing whether or not the input matches the regex. All callbacks are called in the context of the checkmate jQuery object, 'this' will refer to $(this).
+All callbacks are called with one argument, a boolean value representing whether or not the input is valid. All callbacks are called in the context of the checkmate object, 'this' will refer to $(this).
 
 	$("#first-name").checkmate({
 		match: /^[a-zA-Z]{2,}$/,
 		
-		//called whenever is validated from an outside state, ex: $().checkmate('validate');
+		//called whenever validated from an outside state, ex: $().checkmate('validate');
 		validate: function(match){
 			console.log("validated " + match);
 		},
 		
 		//called whenever a keypress is made in 'first-name'.
-		//match will be represenative of weather the current text matches the regex.
-		//this does not invoke the validate callback.
 		keypress: function(match){
 			console.log("key pressed " + match);
 		},
@@ -71,6 +69,7 @@ All callbacks are called with one argument, a boolean value representing whether
 	});
 	
 ##Submit Listener
+
 	$("#email").checkmate({
 		match: /^\w+@\w+\.\w{2,4}$/,
 		
@@ -79,7 +78,7 @@ All callbacks are called with one argument, a boolean value representing whether
 		submit: $("#submit-button")
 	});
 	
-##Master Input
+##Master Inputs
 
 	$("#password").checkmate({
 		match: /^\w{6,}$/,
@@ -99,11 +98,13 @@ All callbacks are called with one argument, a boolean value representing whether
 	});
 	
 ##Custom Validation Logic
-	$("#first-name").checkmate({
+	
+	Instead of matching agains a regular expression, custom code can be used to determine if the input is valid. This means that checkmate isn't limited to text inputs.
+	$("#register-username").checkmate({
 		
 		isvalid: function(){
-			//only valid on Thursdays
-			return new Date().getDay() == 4;
+			//AJAX code to determine if the username is alerady taken
+			return foo;
 		}
 	});
 	
@@ -121,6 +122,7 @@ All callbacks are called with one argument, a boolean value representing whether
 	$().checkmate('isvalid');
 	
 ##Shared Settings
+
 	var common = {
 		require: false,
 		
@@ -180,4 +182,6 @@ The created Qtip will now appear whenever 'name' passes a validation and will di
 		focusout: true, //show/hide whenever focus is lost
 		invert: true    //inverts the show/hide behavior
 	}
+	
+Qtips are not affected by a silent validation.
 	
