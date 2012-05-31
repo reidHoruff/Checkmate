@@ -11,7 +11,7 @@
 				submit: false,
 				keyup: false,
 				keypress: false,
-				validate: true,
+				validate: false,
 				invert: false
 			}
 		}
@@ -120,22 +120,22 @@
 	
 	$.fn.checkmate = function(args){
 		
-		if(args == 'validate'){
-			if(arguments.length == 2 && typeof arguments[1] === 'object'){
-				return validate_all(arguments[1], false);
+		if( args == 'validate' || args == 'isvalid' ){
+			var silent = (args == 'isvalid')?true:false;
+			
+			//called upon a specific checkmate object
+			if( this.data('checkmate') != undefined ){
+					return validate_all([this], silent);
 			}
-			else{
-				return validate_all(instances, false);
+			if(arguments.length == 2 && typeof arguments[1] === 'object'){ //if defined list of objects to verify
+				return validate_all(arguments[1], silent);
 			}
-		}
-		else if(args == 'isvalid'){
-			if(arguments.length == 2 && typeof arguments[1] === 'object'){
-				return validate_all(arguments[1], false);
-			}
-			else{
-				return validate_all(instances, false);
+			else{ //verify everybody
+				return validate_all(instances, silent);
 			}
 		}
+		
+		console.log( this.data('checkmate') == undefined );
 		
 		return this.each(function(){
 			if( $(this).data('checkmate') == undefined ){
