@@ -1,7 +1,9 @@
 #Checkmate
+
 Checkmate is a flexible jQuery plugin for user input validation with qtip integration.
 
 ##Setup
+
 Just include jQuery 1.5+ (tested) and checkmate.js
 
 ##Validating a Single Text Input
@@ -42,6 +44,7 @@ Just include jQuery 1.5+ (tested) and checkmate.js
 	$().checkmate('validate', [$("#first-name"), $("#last-name")] );
 	
 ##Callback Methods
+
 All callbacks are called with one argument, a boolean value representing whether or not the input is valid. All callbacks are called in the context of the checkmate object, 'this' will refer to $(this).
 
 	$("#first-name").checkmate({
@@ -100,6 +103,7 @@ All callbacks are called with one argument, a boolean value representing whether
 ##Custom Validation Logic
 	
 	Instead of matching agains a regular expression, custom code can be used to determine if the input is valid. This means that checkmate isn't limited to text inputs.
+	
 	$("#register-username").checkmate({
 		
 		isvalid: function(){
@@ -140,6 +144,7 @@ All callbacks are called with one argument, a boolean value representing whether
 	}));
 	
 ##Qtip 2.0+ Integration
+
 It might seem sloppy to have another extension sort of half integrated. But checkmate started around the idea of having qtip boxes popup around user inputs. All checkmate does is hide/show qtip objects already defined and attached to the same object that a checkmate object to atteched to.
 
 
