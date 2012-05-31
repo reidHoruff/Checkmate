@@ -140,7 +140,8 @@ All callbacks are called with one argument, a boolean value representing whether
 ##Qtip 2.0+ Integration
 It might seem sloppy to have another extension sort of half integrated. But checkmate started around the idea of having qtip boxes popup around user inputs. All checkmate does is hide/show qtip objects already defined and attached to the same object that a checkmate object to atteched to.
 
-	//include qtip jquery extension and attack to name input
+
+Create Qtip
 	$("#name").qtip({
 		content: 'Name is Invalid',
 		
@@ -157,7 +158,8 @@ It might seem sloppy to have another extension sort of half integrated. But chec
 			classes: 'ui-tooltip-dark'
 		}
 	});
-	
+
+Create Chackmate
 	$("#name").checkmate({
 		match: /^[a-zA-Z]{2,}$/,
 		
