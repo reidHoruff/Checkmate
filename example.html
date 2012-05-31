@@ -1,0 +1,112 @@
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.2/jquery.min.js"></script>
+<script src='checkmate.js' ></script>
+<!-- include qtip -->
+<script src="qtip/jquery.qtip.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="qtip/jquery.qtip.min.css" />
+
+<style>
+h1{
+	font-family:arial;
+}
+
+input{
+	font-size: 16;
+}
+
+[type=text], [type=password]{
+	border: 1px solid #ddd;
+}
+</style>
+
+<h1>Checkmate</h1>
+<input type='text' placeholder='first name' id='fname'/>
+</br>
+<input type='text' placeholder='last name' id='lname'/>
+</br>
+<input type='text' placeholder='email' id='email'/>
+</br>
+<input type='password' placeholder='password' id='password'/>
+</br>
+<input type='password' placeholder='confirm password' id='password2'/>
+</br>
+<input id='submit-button' type='button' value='submit' onclick='verify()'/>
+
+<script>
+
+	/* common to all checkmate objects */
+	var checkmate_common = {
+		qtip:{
+			focusout: true,
+			validate: true
+		},
+		
+		validate: function(valid){
+			console.log(this.attr('id') + ' ' + valid);
+		}
+	}
+	
+	/* create all checkmates */
+	$("#fname").checkmate($.extend({}, checkmate_common, {
+		match: /^[a-zA-Z]{2,}$/,
+	}));
+	
+	$("#lname").checkmate($.extend({}, checkmate_common, {
+		match: /^[a-zA-Z]{2,}$/,
+	}));
+	
+	$("#email").checkmate($.extend({}, checkmate_common, {
+		match: /^\w+@\w+\.\w{2,4}$/,
+	}));
+	
+	$("#password").checkmate($.extend({}, checkmate_common, {
+		match: /^\w{6,}$/,
+	}));
+	
+	$("#password2").checkmate($.extend({}, checkmate_common, {
+		master: $("#password")
+	}));
+	
+	function verify(){
+		if($().checkmate('validate')){
+			alert("all fields are valid!");
+		}
+	}
+	
+	/* create all qtips */
+	var qtip_common = {
+		position: {
+			my: 'center left',	
+			at: 'center right',
+		},
+		
+		show: false,
+		hide: false,
+		
+		style:{
+			tip: true,
+			classes: 'ui-tooltip-dark'
+		}
+	}
+	
+	$("#fname").qtip($.extend({}, qtip_common, {
+		content: 'Invalid First Name'
+	}));
+	
+	$("#lname").qtip($.extend({}, qtip_common, {
+		content: 'Invalid Last Name'
+	}));
+	
+	$("#email").qtip($.extend({}, qtip_common, {
+		content: 'Invalid Email Address'
+	}));
+	
+	$("#password").qtip($.extend({}, qtip_common, {
+		content: 'Invalid Password'
+	}));
+	
+	$("#password2").qtip($.extend({}, qtip_common, {
+		content: 'Passwords don\'t Match'
+	}));
+	
+</script>
