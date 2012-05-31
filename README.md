@@ -108,7 +108,7 @@ Instead of matching agains a regular expression, custom code can be used to dete
 		
 		isvalid: function(){
 			//AJAX code to determine if the username is alerady taken
-			return foo;
+			return username_is_available;
 		}
 	});
 	
