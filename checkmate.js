@@ -10,7 +10,9 @@
 			qtip: {
 				submit: false,
 				keyup: false,
-				keypress: false
+				keypress: false,
+				validate: true,
+				invert: false
 			}
 		}
 		
@@ -33,7 +35,6 @@
 			
 			/* key press listener */
 			$this.keyup(function(){
-				console.log('press');
 				var valid = plugin.is_valid();
 				
 				/* invoke callback */
@@ -43,7 +44,7 @@
 				
 				/* qtip */
 				if(plugin.settings.qtip.keyup){
-					$this.qtip(valid?'hide':'show');
+					$this.qtip((valid^plugin.settings.qtip.invert)?'hide':'show');
 				}
 			});
 			
@@ -58,7 +59,7 @@
 				
 				/* qtip */
 				if(plugin.settings.qtip.focusout){
-					$this.qtip(valid?'hide':'show');
+					$this.qtip((valid^plugin.settings.qtip.invert)?'hide':'show');
 				}
 			});
 		}
@@ -82,19 +83,19 @@
 		}
 		
 		plugin.validate = function(){
-			var match = plugin.is_valid();
+			var valid = plugin.is_valid();
 			
 			/* invoke callback */
 			if(plugin.settings.validate){
-				plugin.settings.validate.call($this, match);
+				plugin.settings.validate.call($this, valid);
 			}
 			
 			/* qtip */
 			if(plugin.settings.qtip.validate){
-				$this.qtip(match?'hide':'show');
+				$this.qtip((valid^plugin.settings.qtip.invert)?'hide':'show');
 			}
 			
-			return match;
+			return valid;
 		}
 		
 		plugin.init();
@@ -102,25 +103,38 @@
 	
 	var instances = [];
 	
+	var validate_all = function(set, silent){
+		var all_valid = true;
+		
+		for(index in set){
+			if(silent){
+				all_valid &= set[index].data('checkmate').is_valid();
+			}
+			else{
+				all_valid &= set[index].data('checkmate').validate();				
+			}
+		}
+		
+		return all_valid?true:false;
+	}
+	
 	$.fn.checkmate = function(args){
 		
 		if(args == 'validate'){
-			var all_valid = true;
-			
-			for(index in instances){
-				all_valid &= instances[index].data('checkmate').validate();
+			if(arguments.length == 2 && typeof arguments[1] === 'object'){
+				return validate_all(arguments[1], false);
 			}
-			
-			return all_valid?true:false;
+			else{
+				return validate_all(instances, false);
+			}
 		}
 		else if(args == 'isvalid'){
-			var all_valid = true;
-			
-			for(index in instances){
-				all_valid &= instances[index].data('checkmate').is_valid();
+			if(arguments.length == 2 && typeof arguments[1] === 'object'){
+				return validate_all(arguments[1], false);
 			}
-			
-			return all_valid?true:false;
+			else{
+				return validate_all(instances, false);
+			}
 		}
 		
 		return this.each(function(){
@@ -128,10 +142,6 @@
 				var plugin = new $.checkmate(this, args);
 				$(this).data('checkmate', plugin);
 				instances.push( $(this) );
-			}
-			else{
-				var instance = $(this).data('checkmate');
-				console.log('instance');
 			}
 		});
 	};
