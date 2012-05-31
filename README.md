@@ -102,7 +102,7 @@ All callbacks are called with one argument, a boolean value representing whether
 	
 ##Custom Validation Logic
 	
-	Instead of matching agains a regular expression, custom code can be used to determine if the input is valid. This means that checkmate isn't limited to text inputs.
+Instead of matching agains a regular expression, custom code can be used to determine if the input is valid. This means that checkmate isn't limited to text inputs.
 	
 	$("#register-username").checkmate({
 		
