@@ -141,7 +141,7 @@ All callbacks are called with one argument, a boolean value representing whether
 It might seem sloppy to have another extension sort of half integrated. But checkmate started around the idea of having qtip boxes popup around user inputs. All checkmate does is hide/show qtip objects already defined and attached to the same object that a checkmate object to atteched to.
 
 
-Create Qtip
+####Create Qtip
 
 	$("#name").qtip({
 		content: 'Name is Invalid',
@@ -160,7 +160,7 @@ Create Qtip
 		}
 	});
 
-Create Chackmate
+####Create Chackmate
 
 	$("#name").checkmate({
 		match: /^[a-zA-Z]{2,}$/,
@@ -171,10 +171,8 @@ Create Chackmate
 	});
 	
 The created Qtip will now appear whenever 'name' passes a validation and will dissapear whenever 'name' fails a validation.
-
-**************
 	
-qtip options
+####Qtip options
 
 	qtip:{
 		validate: true, //show/hide on validation
