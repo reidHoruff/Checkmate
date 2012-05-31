@@ -165,12 +165,14 @@ Create Chackmate
 	$("#name").checkmate({
 		match: /^[a-zA-Z]{2,}$/,
 		
-		//qtip will appear whenever name is validated if the validation fails.
-		//qtip will be hidden whenever name is validated if the validation passes
 		qtip: {
 			validate: true,
 		}
 	});
+	
+The created Qtip will now appear whenever 'name' passes a validation and will dissapear whenever 'name' fails a validation.
+
+**************
 	
 qtip options
 
