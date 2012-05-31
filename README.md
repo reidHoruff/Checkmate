@@ -180,3 +180,4 @@ The created Qtip will now appear whenever 'name' passes a validation and will di
 		focusout: true, //show/hide whenever focus is lost
 		invert: true    //inverts the show/hide behavior
 	}
+	
